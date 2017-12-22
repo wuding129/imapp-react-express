@@ -14,10 +14,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, applyMiddleware, compose} from 'redux'
 import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+
 
 import './index.css'
 import App from './App'
-import {addGun, counter, removeGun, addGunAsync} from "./store";
+import {counter} from "./store";
 
 
 const reduxDevtools = window.devToolsExtension?window.devToolsExtension(): f=>f
@@ -26,9 +28,22 @@ const store = createStore(counter, compose(
   reduxDevtools)
 )
 
+// 没用react-redux
+/*
+
 function render(){
   ReactDOM.render(<App store={store} addGun={addGun} removeGun={removeGun} addGunAsync={addGunAsync}/>, document.getElementById('root'))
 }
 
 render()
-store.subscribe(render)
+store.subscribe(render)*/
+
+// 用react-redux
+ReactDOM.render(
+  (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  ),
+  document.getElementById('root')
+)
